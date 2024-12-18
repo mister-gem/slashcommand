@@ -1,0 +1,37 @@
+const { SlashCommandBuilder } = require('discord.js');
+const axios = require('axios');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+    .setName('sale')
+    .setDescription('sale tutorial')
+    .addStringOption(option => option.setName('name').setDescription('Client Name').setRequired(true))
+    .addStringOption(option => option.setName('leadsource').setDescription('Lead Source').setRequired(true))
+    .addStringOption(option => option.setName('date').setDescription('Date').setRequired(true))
+    .addStringOption(option => option.setName('annualpremium').setDescription('Annual Premium').setRequired(true))
+    .addStringOption(option => option.setName('carrier').setDescription('Carrier').setRequired(true))
+    .addStringOption(option => option.setName('policynumber').setDescription('Policy Number').setRequired(true)),
+    async execute (interaction) {
+
+        await interaction.reply({ content: "This is working", ephemeral: true});
+
+        const name = interaction.options.getString('name')
+        const leadsource = interaction.options.getString('leadsource')
+        const date = interaction.options.getString('date')
+        const annualpremium = interaction.options.getString('annualpremium')
+        const carrier = interaction.options.getString('carrier')
+        const policynumber = interaction.options.getString('policynumber')
+
+        axios.post('https://sheetdb.io/api/v1/fjf880x1bie74', {
+            data: {
+                name: `${name}`,
+                leadsource: `${leadsource}`,
+                date: `${date}`,
+                annualpremium: `${annualpremium}`,
+                carrier: `${carrier}`,
+                policynumber: `${policynumber}`
+            }
+        })
+
+    }
+}
